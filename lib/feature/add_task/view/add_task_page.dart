@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:neubrutalism_ui/neubrutalism_ui.dart';
 import 'package:todoapp/core/text_widget/neu_text.dart';
+import 'package:todoapp/feature/add_task/controller/add_task_controller.dart';
+import 'package:todoapp/utils/floor/model/floor.dart';
 import 'package:todoapp/utils/height_width_converter.dart';
 import 'package:todoapp/utils/notification/notification_utils.dart';
 import 'package:todoapp/utils/pre_define_snack_bar/custom_snack_bar.dart';
@@ -16,6 +19,10 @@ class AddTaskPage extends StatefulWidget with NeuText {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  final addTaskController = AddTaskController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +39,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   NeuIconButton(
                     buttonColor: Colors.pink.shade300,
                     buttonWidth: 50,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.back();
+                    },
                     enableAnimation: true,
                     icon: const Icon(Icons.arrow_back),
                   ),
@@ -51,9 +60,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
               ),
               NeuContainer(
                 color: Colors.white,
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(4.0),
                   child: TextField(
+                    controller: titleController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Enter Title',
@@ -73,9 +83,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
               ),
               NeuContainer(
                 color: Colors.white,
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(4.0),
                   child: TextField(
+                    controller: descriptionController,
                     maxLines: 3,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -124,16 +135,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ),
                 ),
               ),
-              SizedBox(height: heightValue(20)),
+              Spacer(),
+              // SizedBox(height: heightValue(0)),
 
               // Add Task Button
               NeuTextButton(
                 onPressed: () {
-                  // NotificationService().showNotification(
-                  //   title: "Task Added",
-                  //   body: "Task has been added successfully",
-                  // );
-                  AtlSnackbarUtil.showWarning(message: "1234");
+                  addTaskController.addToDo(
+                      titleController.text, descriptionController.text);
                 },
                 enableAnimation: true,
                 text: const Text("Save"),

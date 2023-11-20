@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:neubrutalism_ui/neubrutalism_ui.dart';
+import 'package:todoapp/utils/height_width_converter.dart';
 import 'package:todoapp/utils/snack_bar/content_type.dart';
 
-class AtlSnackbarUtil {
+class CustomSnackbarUtil {
   static void showSuccess({required String message, String title = ''}) {
     _showSnackbar(
       title: title.isEmpty ? 'Success' : title,
@@ -65,8 +66,8 @@ class AtlSnackbarUtil {
                   icon,
                   color: Colors.white,
                 ),
-                const SizedBox(
-                  width: 10,
+                SizedBox(
+                  width: widthValue(10),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
